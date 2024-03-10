@@ -5,6 +5,7 @@ import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
 
+//get all Recipies of the users
 router.get("/", async (req, res) => {
   try {
     const response = await RecipieModel.find({});
@@ -13,7 +14,7 @@ router.get("/", async (req, res) => {
     res.json(err);
   }
 });
-
+//create a new Recipies
 router.post("/", async (req, res) => {
   const recipie = new RecipieModel(req.body);
   try {
@@ -24,6 +25,7 @@ router.post("/", async (req, res) => {
     console.log(err);
   }
 });
+//find recipie by ID of the user
 router.put("/", async (req, res) => {
   try {
     const recipie = await RecipieModel.findById(req.body.recipieID);
@@ -36,28 +38,7 @@ router.put("/", async (req, res) => {
     console.log(err);
   }
 });
-
-router.get("/savedRecipies/ids", async (req, res) => {
-  try {
-    const user = await UserModel.findById(req.body.userID);
-    res.json({ savedRecipies: user?.savedRecipies });
-  } catch (err) {
-    res.json(err);
-  }
-});
-
-router.get("/savedRecipies", async (req, res) => {
-  try {
-    const user = await UserModel.findById(req.body.userID);
-    const savedRecipies = await RecipieModel.find({
-      _id: { $in: user.savedRecipies },
-    });
-    res.json({ savedRecipies });
-  } catch (err) {
-    res.json(err);
-  }
-});
-
+//update the recipie
 router.put("/updaterecipies/:id", async (req, res) => {
   const recipeId = req.params.id;
   const { recipiename, ingredients, descriptions } = req.body;
@@ -78,6 +59,7 @@ router.put("/updaterecipies/:id", async (req, res) => {
     res.json(err);
   }
 });
+//delet the recipie
 router.delete("/deleterecipies/:id", async (req, res) => {
   const recipeId = req.params.id;
   console.log("checking");

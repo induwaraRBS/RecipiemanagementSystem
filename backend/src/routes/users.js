@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
-
+//create user
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
 
   res.json({ message: "User registered Successfully" });
 });
-
+//get user credentials to login the user account
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await UserModel.findOne({ username });
